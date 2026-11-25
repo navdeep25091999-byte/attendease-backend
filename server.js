@@ -74,6 +74,26 @@ app.post('/api/attendance', async (req, res) => {
   }
 });
 
+// Edit a student
+app.put('/api/students/:id', async (req, res) => {
+  try {
+    const updatedStudent = await Student.findByIdAndUpdate(req.params.id, req.body, { returnDocument: 'after' });
+    res.json(updatedStudent);
+  } catch (err) {
+    res.status(400).json({ error: err.message });
+  }
+});
+
+// Delete a student (and their attendance records)
+app.delete('/api/students/:id', async (req, res) => {
+  try {
+    await Student.findByIdAndDelete(req.params.id);
+    await Attendance.deleteMany({ studentId: req.params.id });
+    res.json({ message: 'Student deleted' });
+  } catch (err) {
+    res.status(400).json({ error: err.message });
+  }
+});
 // ---------- Start Server ----------
 const PORT = process.env.PORT || 3000;
 mongoose.connect(process.env.MONGODB_URI)
