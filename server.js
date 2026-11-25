@@ -9,8 +9,7 @@ const app = express();
 
 // Key: Allow your GitHub Pages domain for cross-origin requests
 app.use(cors({
-  origin: 'https://navdeep25091999-byte.github.io',
-  credentials: true
+  origin: ['https://navdeep25091999-byte.github.io', 'http://127.0.0.1:5500', 'http://localhost:5500']
 }));
 
 app.use(express.json());
