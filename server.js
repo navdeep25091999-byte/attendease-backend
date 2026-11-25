@@ -63,10 +63,10 @@ app.get('/api/attendance/:date', async (req, res) => {
 app.post('/api/attendance', async (req, res) => {
   const { studentId, date, status } = req.body;
   try {
-    const record = await Attendance.findOneAndUpdate(
+      const record = await Attendance.findOneAndUpdate(
       { studentId, date },
       { status },
-      { upsert: true, new: true }
+      { upsert: true, returnDocument: 'after' }
     );
     res.json(record);
   } catch (err) {
